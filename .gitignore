@@ -1,2 +1,20 @@
-# Ralph config (may contain API key)
-.cursor/ralph-config.json
+# Build source (cloned for compilation, not needed in repo)
+ripgrep/
+
+# Development/automation files
+.ralph/
+.cursor/
+
+# Node
+node_modules/
+
+# macOS
+.DS_Store
+
+# Editor
+*.swp
+*~
+.vscode/
+
+# Test files
+*.txt
