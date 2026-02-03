@@ -131,11 +131,11 @@ Compilation de Ripgrep pour WASM/WasmTime                            │ │
  │ │                                                                      │ │
  │ │ Critères de validation                                               │ │
  │ │                                                                      │ │
- │ │ 1. [ ] Rust et le target wasm32-wasip1 sont installés                │ │
- │ │ 2. [ ] WasmTime est installé et fonctionnel                          │ │
- │ │ 3. [ ] Ripgrep est cloné depuis GitHub                               │ │
- │ │ 4. [ ] Compilation réussie vers rg.wasm                              │ │
- │ │ 5. [ ] Exécution réussie avec WasmTime sur un fichier local          │ │
+ │ │ 1. [x] Rust et le target wasm32-wasip1 sont installés                │ │
+ │ │ 2. [x] WasmTime est installé et fonctionnel                          │ │
+ │ │ 3. [x] Ripgrep est cloné depuis GitHub                               │ │
+ │ │ 4. [x] Compilation réussie vers rg.wasm                              │ │
+ │ │ 5. [x] Exécution réussie avec WasmTime sur un fichier local          │ │
  │ │ 6. [ ] Package NPM créé et fonctionnel                               │ │
  │ │ 7. [ ] Gem Ruby créée et fonctionnelle                               │ │
  │ │ 8. [ ] Documentation complète (README, IMPLEMENTATION, SECURITY)     │ │
