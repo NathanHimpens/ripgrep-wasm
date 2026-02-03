@@ -1,0 +1,38 @@
+{
+  "name": "@nathanhimpens/ripgrep-wasm",
+  "version": "1.0.0",
+  "description": "Ripgrep 15.1.0 compiled to WebAssembly for fast text search in WASI environments",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "postinstall": "node lib/download.js"
+  },
+  "keywords": [
+    "ripgrep",
+    "rg",
+    "wasm",
+    "wasi",
+    "search",
+    "grep",
+    "regex",
+    "text"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NathanHimpens/ripgrep-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NathanHimpens/ripgrep-wasm/issues"
+  },
+  "homepage": "https://github.com/NathanHimpens/ripgrep-wasm#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "index.js",
+    "lib/",
+    "README.md"
+  ]
+}

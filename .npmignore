@@ -1,0 +1,28 @@
+# Build outputs
+ripgrep/
+*.txt
+
+# Development files
+.ralph/
+.cursor/
+.vscode/
+*.swp
+*~
+
+# macOS
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Documentation (keep README.md)
+SECURITY.md
+IMPLEMENTATION.md
+RALPH_TASK.md
+
+# Ruby gem files (not needed in npm package)
+*.gemspec
+Rakefile
+lib/ripgrep_wasm/
+lib/ripgrep_wasm.rb
