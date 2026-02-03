@@ -138,7 +138,7 @@ Compilation de Ripgrep pour WASM/WasmTime                            │ │
  │ │ 5. [x] Exécution réussie avec WasmTime sur un fichier local          │ │
  │ │ 6. [x] Package NPM créé et fonctionnel                               │ │
  │ │ 7. [x] Gem Ruby créée et fonctionnelle                               │ │
- │ │ 8. [ ] Documentation complète (README, IMPLEMENTATION, SECURITY)     │ │
+ │ │ 8. [x] Documentation complète (README, IMPLEMENTATION, SECURITY)     │ │
  │ │                                                                      │ │
  │ │                                                                      │ │
  │ │ ────────────────────────────────────────                             │ │
