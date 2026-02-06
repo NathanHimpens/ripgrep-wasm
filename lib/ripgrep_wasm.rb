@@ -2,35 +2,36 @@
 
 require_relative 'ripgrep_wasm/version'
 require_relative 'ripgrep_wasm/downloader'
+require_relative 'ripgrep_wasm/runner'
 
 module RipgrepWasm
   class Error < StandardError; end
+  class BinaryNotFound < Error; end
+  class ExecutionError < Error; end
 
-  # Get the path to the rg.wasm binary
-  #
-  # @return [String] The absolute path to rg.wasm
-  def self.path
-    wasm_path = File.join(File.dirname(__FILE__), 'ripgrep_wasm', 'rg.wasm')
-    
-    # If the file doesn't exist, try to download it
-    unless File.exist?(wasm_path)
-      Downloader.download_if_needed
+  DEFAULT_BINARY_PATH = File.join(File.dirname(__FILE__), 'ripgrep_wasm', 'rg.wasm').freeze
+
+  class << self
+    attr_writer :binary_path, :runtime
+
+    def binary_path
+      @binary_path || DEFAULT_BINARY_PATH
     end
-    
-    wasm_path
-  end
 
-  # Check if rg.wasm is available
-  #
-  # @return [Boolean] true if rg.wasm exists
-  def self.available?
-    File.exist?(path)
-  end
+    def runtime
+      @runtime || 'wasmtime'
+    end
 
-  # Get the absolute path to rg.wasm
-  #
-  # @return [String] The absolute path to rg.wasm
-  def self.absolute_path
-    File.expand_path(path)
+    def download_to_binary_path!
+      Downloader.download(to: binary_path)
+    end
+
+    def run(*args, wasm_dir: '.')
+      Runner.run(*args, wasm_dir: wasm_dir)
+    end
+
+    def available?
+      File.exist?(binary_path)
+    end
   end
 end
