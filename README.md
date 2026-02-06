@@ -25,10 +25,76 @@ console.log(rgWasmPath); // Path to rg.wasm
 gem install ripgrep_wasm
 ```
 
+Or add it to your `Gemfile`:
+
+```ruby
+gem 'ripgrep_wasm'
+```
+
+#### Quick Start
+
 ```ruby
 require 'ripgrep_wasm'
-puts RipgrepWasm.path      # Path to rg.wasm
-puts RipgrepWasm.available? # true if binary exists
+
+# Download the WASM binary (first time only)
+RipgrepWasm.download_to_binary_path!
+
+# Search for a pattern in the current directory
+result = RipgrepWasm.run('-i', 'TODO', '.')
+puts result[:stdout]
+```
+
+#### Configuration
+
+```ruby
+# Get / set the path where rg.wasm is stored
+RipgrepWasm.binary_path              # => ".../lib/ripgrep_wasm/rg.wasm" (default)
+RipgrepWasm.binary_path = "/opt/wasm/rg.wasm"
+
+# Get / set the WASI runtime executable
+RipgrepWasm.runtime                  # => "wasmtime" (default)
+RipgrepWasm.runtime = "wasmer"
+```
+
+#### Download
+
+```ruby
+# Downloads rg.wasm from the latest GitHub Release to binary_path.
+# Creates intermediate directories if needed.
+# Returns true on success, raises on failure.
+RipgrepWasm.download_to_binary_path!
+```
+
+#### Execution
+
+```ruby
+# Run ripgrep. All arguments are forwarded to the binary.
+# wasm_dir controls which directory the WASI sandbox can access (default ".").
+result = RipgrepWasm.run('-n', 'pattern', 'src/', wasm_dir: '.')
+# => { stdout: "src/main.rb:12:  pattern found\n", stderr: "", success: true }
+
+puts result[:stdout]
+```
+
+#### Introspection
+
+```ruby
+RipgrepWasm.available?  # => true if rg.wasm exists at binary_path
+```
+
+#### Error Handling
+
+```ruby
+begin
+  RipgrepWasm.run('pattern', 'file.txt')
+rescue RipgrepWasm::BinaryNotFound => e
+  # rg.wasm is missing -- download it first
+  RipgrepWasm.download_to_binary_path!
+  retry
+rescue RipgrepWasm::ExecutionError => e
+  # Non-zero exit from the runtime (e.g. no matches, bad args)
+  warn e.message  # includes stderr output
+end
 ```
 
 ### Manual
