@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+gem 'minitest', '~> 5.0'
 require 'minitest/autorun'
+require 'minitest/mock'
 require 'tmpdir'
 require 'fileutils'
 require_relative '../lib/ripgrep_wasm'

@@ -89,24 +89,36 @@ module RipgrepWasm
       end
 
       download_uri = URI(asset['browser_download_url'])
-      download_http = Net::HTTP.new(download_uri.host, download_uri.port)
-      download_http.use_ssl = true
-      download_http.read_timeout = 300
-
-      download_request = Net::HTTP::Get.new(download_uri)
-      download_request['User-Agent'] = 'ripgrep-wasm-ruby-downloader'
-      download_request['Accept'] = 'application/octet-stream'
+      max_redirects = 10
+      redirects = 0
 
       File.open(target, 'wb') do |file|
-        download_http.request(download_request) do |dl_response|
-          case dl_response.code
-          when '200'
-            dl_response.read_body do |chunk|
-              file.write(chunk)
+        loop do
+          download_http = Net::HTTP.new(download_uri.host, download_uri.port)
+          download_http.use_ssl = (download_uri.scheme == 'https')
+          download_http.read_timeout = 300
+
+          download_request = Net::HTTP::Get.new(download_uri)
+          download_request['User-Agent'] = 'ripgrep-wasm-ruby-downloader'
+          download_request['Accept'] = 'application/octet-stream'
+
+          download_http.request(download_request) do |dl_response|
+            case dl_response
+            when Net::HTTPRedirection
+              redirects += 1
+              raise "Too many redirects" if redirects > max_redirects
+              download_uri = URI(dl_response['location'])
+              next
+            when Net::HTTPSuccess
+              dl_response.read_body do |chunk|
+                file.write(chunk)
+              end
+            else
+              raise "Failed to download asset: #{dl_response.code}"
             end
-          else
-            raise "Failed to download asset: #{dl_response.code}"
           end
+
+          break
         end
       end
 
